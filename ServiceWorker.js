@@ -1,9 +1,9 @@
-const cacheName = "DefaultCompany-Alpha_20241020_6000.0.23_3D_EffectStudy-0.0.6";
+const cacheName = "DefaultCompany-Alpha_20241020_6000.0.23_3D_EffectStudy-0.0.7";
 const contentToCache = [
-    "Build/webBuild.loader.js",
-    "Build/webBuild.framework.js",
-    "Build/webBuild.data",
-    "Build/webBuild.wasm",
+    "Build/BuildWebgl.loader.js",
+    "Build/BuildWebgl.framework.js",
+    "Build/BuildWebgl.data",
+    "Build/BuildWebgl.wasm",
     "TemplateData/style.css"
 
 ];
