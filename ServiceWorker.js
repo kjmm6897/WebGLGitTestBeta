@@ -1,9 +1,9 @@
-const cacheName = "DefaultCompany-Alpha_20241020_6000.0.23_3D_EffectStudy-0.0.11";
+const cacheName = "DefaultCompany-Alpha_20241020_6000.0.23_3D_EffectStudy-0.0.12";
 const contentToCache = [
-    "Build/0.0.11_webBuild.loader.js",
-    "Build/0.0.11_webBuild.framework.js",
-    "Build/0.0.11_webBuild.data",
-    "Build/0.0.11_webBuild.wasm",
+    "Build/0.0.12_webBuild.loader.js",
+    "Build/0.0.12_webBuild.framework.js",
+    "Build/0.0.12_webBuild.data",
+    "Build/0.0.12_webBuild.wasm",
     "TemplateData/style.css"
 
 ];
@@ -18,16 +18,29 @@ self.addEventListener('install', function (e) {
     })());
 });
 
-self.addEventListener('fetch', function (e) {
-    e.respondWith((async function () {
-      let response = await caches.match(e.request);
-      console.log(`[Service Worker] Fetching resource: ${e.request.url}`);
-      if (response) { return response; }
+// self.addEventListener('fetch', function (e) {
+//     e.respondWith((async function () {
+//       let response = await caches.match(e.request);
+//       console.log(`[Service Worker] Fetching resource: ${e.request.url}`);
+//       if (response) { return response; }
 
-      response = await fetch(e.request);
-      const cache = await caches.open(cacheName);
-      console.log(`[Service Worker] Caching new resource: ${e.request.url}`);
-      cache.put(e.request, response.clone());
-      return response;
-    })());
+//       response = await fetch(e.request);
+//       const cache = await caches.open(cacheName);
+//       console.log(`[Service Worker] Caching new resource: ${e.request.url}`);
+//       cache.put(e.request, response.clone());
+//       return response;
+//     })());
+// });
+
+self.addEventListener('fetch', function (e) {
+    e.respondWith(
+        caches.open(cacheName).then(async (cache) => {
+            const cachedResponse = await cache.match(e.request);
+            const networkResponse = fetch(e.request).then((response) => {
+                cache.put(e.request, response.clone());
+                return response;
+            });
+            return cachedResponse || networkResponse;
+        })
+    );
 });
