@@ -1,4 +1,4 @@
-const cacheName = "DefaultCompany-Alpha_20241020_6000.0.23_3D_EffectStudy-0.0.9";
+const cacheName = "DefaultCompany-Alpha_20241020_6000.0.23_3D_EffectStudy-0.0.10";
 const contentToCache = [
     "Build/webBuild.loader.js",
     "Build/webBuild.framework.js",
