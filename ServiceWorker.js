@@ -1,46 +1,25 @@
-const cacheName = "DefaultCompany-Alpha_20241020_6000.0.23_3D_EffectStudy-0.0.12";
-const contentToCache = [
-    "Build/0.0.12_webBuild.loader.js",
-    "Build/0.0.12_webBuild.framework.js",
-    "Build/0.0.12_webBuild.data",
-    "Build/0.0.12_webBuild.wasm",
-    "TemplateData/style.css"
 
-];
 
 self.addEventListener('install', function (e) {
+    self.skipWaiting(); // 새로운 서비스 워커가 즉시 활성화되도록 요청
     console.log('[Service Worker] Install');
     
-    e.waitUntil((async function () {
-      const cache = await caches.open(cacheName);
-      console.log('[Service Worker] Caching all: app shell and content');
-      await cache.addAll(contentToCache);
-    })());
 });
 
-// self.addEventListener('fetch', function (e) {
-//     e.respondWith((async function () {
-//       let response = await caches.match(e.request);
-//       console.log(`[Service Worker] Fetching resource: ${e.request.url}`);
-//       if (response) { return response; }
-
-//       response = await fetch(e.request);
-//       const cache = await caches.open(cacheName);
-//       console.log(`[Service Worker] Caching new resource: ${e.request.url}`);
-//       cache.put(e.request, response.clone());
-//       return response;
-//     })());
-// });
-
-self.addEventListener('fetch', function (e) {
-    e.respondWith(
-        caches.open(cacheName).then(async (cache) => {
-            const cachedResponse = await cache.match(e.request);
-            const networkResponse = fetch(e.request).then((response) => {
-                cache.put(e.request, response.clone());
-                return response;
-            });
-            return cachedResponse || networkResponse;
+self.addEventListener('activate', function (e) {
+    e.waitUntil(
+        caches.keys().then((cacheNames) => {
+            return Promise.all(
+                cacheNames.map((cache) => {
+                    if (cache !== cacheName) {
+                        console.log('[Service Worker] Old cache cleared:', cache);
+                        return caches.delete(cache);
+                    }
+                })
+            );
         })
     );
+    self.clients.claim(); // 활성화 후 모든 페이지에 적용
 });
+
+
