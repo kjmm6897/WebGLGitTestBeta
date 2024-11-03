@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Unity Web Player | Alpha_20241020_6000.0.23_3D_EffectStudy</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
@@ -24,6 +25,7 @@
         if ("serviceWorker" in navigator) {
           navigator.serviceWorker.register("ServiceWorker.js");
         }
+        window.scrollTo(0, 1);
       });
 
       var container = document.querySelector("#unity-container");
@@ -57,16 +59,16 @@
       }
 
       var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/WebGL_0.0.21.loader.js";
+      var loaderUrl = buildUrl + "/WebGL_0.0.22.loader.js";
       var config = {
         arguments: [],
-        dataUrl: buildUrl + "/WebGL_0.0.21.data",
-        frameworkUrl: buildUrl + "/WebGL_0.0.21.framework.js",
-        codeUrl: buildUrl + "/WebGL_0.0.21.wasm",
+        dataUrl: buildUrl + "/WebGL_0.0.22.data",
+        frameworkUrl: buildUrl + "/WebGL_0.0.22.framework.js",
+        codeUrl: buildUrl + "/WebGL_0.0.22.wasm",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "DefaultCompany",
         productName: "Alpha_20241020_6000.0.23_3D_EffectStudy",
-        productVersion: "0.0.21",
+        productVersion: "0.0.22",
         showBanner: unityShowBanner,
       };
 
